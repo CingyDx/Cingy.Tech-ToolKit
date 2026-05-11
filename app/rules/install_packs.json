@@ -1,0 +1,48 @@
+{
+  "packs": [
+    {
+      "id": "basic_pack",
+      "name": "Basic Pack",
+      "packages": [
+        {"name": "Google Chrome", "winget_id": "Google.Chrome"},
+        {"name": "7-Zip", "winget_id": "7zip.7zip"},
+        {"name": "VLC", "winget_id": "VideoLAN.VLC"},
+        {"name": "LibreOffice", "winget_id": "TheDocumentFoundation.LibreOffice"}
+      ]
+    },
+    {
+      "id": "student_pack",
+      "name": "Student Pack",
+      "packages": [
+        {"name": "Google Chrome", "winget_id": "Google.Chrome"},
+        {"name": "Mozilla Firefox", "winget_id": "Mozilla.Firefox"},
+        {"name": "LibreOffice", "winget_id": "TheDocumentFoundation.LibreOffice"},
+        {"name": "Microsoft Teams", "winget_id": "Microsoft.Teams"},
+        {"name": "Zoom", "winget_id": "Zoom.Zoom"},
+        {"name": "VLC", "winget_id": "VideoLAN.VLC"}
+      ]
+    },
+    {
+      "id": "gaming_pack",
+      "name": "Gaming Pack",
+      "packages": [
+        {"name": "Steam", "winget_id": "Valve.Steam"},
+        {"name": "Discord", "winget_id": "Discord.Discord"},
+        {"name": "Epic Games Launcher", "winget_id": "EpicGames.EpicGamesLauncher"},
+        {"name": "7-Zip", "winget_id": "7zip.7zip"},
+        {"name": "VLC", "winget_id": "VideoLAN.VLC"}
+      ]
+    },
+    {
+      "id": "technician_pack",
+      "name": "Technician Pack",
+      "packages": [
+        {"name": "HWiNFO", "winget_id": null, "todo": "Confirm exact winget ID before enabling install action."},
+        {"name": "CrystalDiskInfo", "winget_id": "CrystalDewWorld.CrystalDiskInfo"},
+        {"name": "CPU-Z", "winget_id": "CPUID.CPU-Z"},
+        {"name": "GPU-Z", "winget_id": null, "todo": "Confirm exact winget ID before enabling install action."},
+        {"name": "AnyDesk or RustDesk", "winget_id": null, "todo": "Technician must choose one remote support tool before install."}
+      ]
+    }
+  ]
+}

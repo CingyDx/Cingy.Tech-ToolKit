@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Cingy.Tech ToolKit icon">
+  <defs>
+    <linearGradient id="bg" x1="42" y1="28" x2="214" y2="228" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="64" y1="44" x2="194" y2="212" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#67e8f9"/>
+      <stop offset="1" stop-color="#0284c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="44" fill="url(#bg)"/>
+  <path d="M128 30 204 58v58c0 48-30 88-76 110-46-22-76-62-76-110V58l76-28Z" fill="#111827" stroke="url(#cyan)" stroke-width="12"/>
+  <path d="M159 72c10 10 12 26 4 39l-18-18-20 20 18 18c-13 8-29 6-39-4-13 14-26 28-39 42-6 6-6 16 0 22 6 6 16 6 22 0 14-13 28-26 42-39 10 8 24 9 36 3l-14-14 20-20 14 14c12-22 6-49-26-63Z" fill="url(#cyan)"/>
+  <path d="M99 181 79 201" stroke="#f8fafc" stroke-width="9" stroke-linecap="round"/>
+  <path d="m136 54-18 47h26l-22 55 56-70h-29l18-32h-31Z" fill="#f8fafc" opacity=".92"/>
+</svg>

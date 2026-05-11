@@ -1,0 +1,96 @@
+{
+  "presets": [
+    {
+      "id": "safe_cleanup",
+      "name": "Safe Cleanup",
+      "purpose": "For almost every customer PC. Lowest risk.",
+      "actions": [
+        "restore_point.create_if_admin",
+        "scan.system",
+        "cleanup.estimate_temp",
+        "cleanup.user_temp",
+        "cleanup.windows_temp",
+        "cleanup.recycle_bin.confirmed",
+        "cleanup.thumbnail_cache.confirmed",
+        "cleanup.directx_shader_cache.confirmed",
+        "cleanup.delivery_optimization.confirmed",
+        "report.generate"
+      ]
+    },
+    {
+      "id": "standard_optimization",
+      "name": "Standard Optimization",
+      "purpose": "Normal slow PC/laptop optimization.",
+      "actions": [
+        "preset.safe_cleanup",
+        "startup.review",
+        "debloat.detect",
+        "debloat.manual_selection",
+        "winget.sources.update_preview",
+        "winget.outdated.check",
+        "install_packs.offer",
+        "privacy.safe_toggles",
+        "power.recommend_profile",
+        "report.generate"
+      ]
+    },
+    {
+      "id": "gaming_mode",
+      "name": "Gaming Mode",
+      "purpose": "Gaming PC / gaming laptop.",
+      "actions": [
+        "preset.standard_optimization",
+        "gaming.game_mode.check",
+        "gaming.xbox_game_bar.check",
+        "power.plan.check",
+        "power.high_performance.offer",
+        "gpu.driver_info.check",
+        "storage.game_drives.check",
+        "startup.gaming_impact.review",
+        "report.generate"
+      ]
+    },
+    {
+      "id": "office_school_mode",
+      "name": "Office / School Mode",
+      "purpose": "Student/work laptop setup.",
+      "actions": [
+        "preset.safe_cleanup",
+        "debloat.oem_trialware.manual_selection",
+        "startup.review",
+        "install_packs.offer",
+        "folders.school_work_backup.offer",
+        "report.generate"
+      ]
+    },
+    {
+      "id": "deep_repair_mode",
+      "name": "Deep Repair Mode",
+      "purpose": "Technician-only Windows repair flow.",
+      "actions": [
+        "restore_point.create",
+        "repair.sfc_scan",
+        "repair.dism_checkhealth",
+        "repair.dism_scanhealth",
+        "repair.dism_restorehealth.confirmed",
+        "repair.windows_update.basic",
+        "repair.flush_dns",
+        "repair.winsock_reset",
+        "repair.ip_stack_reset",
+        "event_log.summary",
+        "report.generate_detailed"
+      ]
+    },
+    {
+      "id": "expert_lab",
+      "name": "Expert Lab",
+      "purpose": "Advanced technician controls gated behind explicit acknowledgement.",
+      "actions": [
+        "expert.warning_gate",
+        "expert.registry.preview",
+        "expert.registry.apply_selected_only",
+        "report.generate"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "rules": [
+    {
+      "id": "cleanup.user_temp",
+      "title": "Clean user temp files",
+      "risk": "safe",
+      "target": "user_temp",
+      "requires_confirmation": true,
+      "notes": "Only files under the current temp directory are eligible."
+    },
+    {
+      "id": "cleanup.windows_temp",
+      "title": "Clean Windows temp files",
+      "risk": "moderate",
+      "target": "windows_temp",
+      "requires_confirmation": true,
+      "notes": "Requires Administrator access and skips locked files."
+    },
+    {
+      "id": "cleanup.recycle_bin",
+      "title": "Empty recycle bin",
+      "risk": "moderate",
+      "target": "recycle_bin",
+      "requires_confirmation": true,
+      "notes": "Customer-facing confirmation is required."
+    },
+    {
+      "id": "cleanup.downloads_report",
+      "title": "Report large Downloads files",
+      "risk": "safe",
+      "target": "downloads_report",
+      "requires_confirmation": false,
+      "notes": "Reports only. Does not delete Downloads."
+    }
+  ]
+}

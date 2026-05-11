@@ -1,0 +1,25 @@
+{
+  "rules": [
+    {
+      "id": "chat_clients",
+      "name": "Chat clients",
+      "match_patterns": ["discord", "teams", "slack", "skype"],
+      "recommendation": "Review with customer; disable only if not needed at sign-in.",
+      "risk": "moderate"
+    },
+    {
+      "id": "game_launchers",
+      "name": "Game launchers",
+      "match_patterns": ["steam", "epicgameslauncher", "battle.net", "ea app"],
+      "recommendation": "Usually safe to disable from startup on non-gaming PCs.",
+      "risk": "safe"
+    },
+    {
+      "id": "security_tools",
+      "name": "Security tools",
+      "match_patterns": ["defender", "securityhealth", "antivirus", "firewall"],
+      "recommendation": "Do not disable security-related startup entries from this toolkit.",
+      "risk": "expert"
+    }
+  ]
+}
