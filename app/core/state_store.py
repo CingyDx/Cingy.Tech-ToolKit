@@ -46,6 +46,7 @@ class JsonRuleStore:
             "privacy_tweaks.json": {"id", "title", "risk"},
             "install_packs.json": {"id", "name", "packages"},
             "expert_registry_tweaks.json": {"id", "title", "risk", "registry"},
+            "modes.json": {"id", "title_cs", "short_description_cs", "risk", "action_ids", "visible_by_default", "technician_only"},
         }
         errors: list[str] = []
         for filename, fields in checks.items():

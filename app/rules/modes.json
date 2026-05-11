@@ -1,0 +1,265 @@
+{
+  "modes": [
+    {
+      "id": "safe_cleanup",
+      "title_cs": "Bezpečné vyčištění",
+      "title_en": "Safe Cleanup",
+      "short_description_cs": "Vyčistí dočasné soubory a běžný nepořádek bez zásahu do osobních souborů.",
+      "long_description_cs": "Nejbezpečnější režim pro běžný zákaznický počítač. Zkontroluje stav, připraví bod obnovení tam, kde je k dispozici, a nabídne jen bezpečné úklidové kroky.",
+      "risk": "safe",
+      "recommended_for": ["Běžný zákaznický počítač", "První kontrola"],
+      "action_ids": [
+        "scan.system",
+        "restore_point.create_if_admin",
+        "cleanup.user_temp",
+        "cleanup.downloads_report",
+        "report.generate"
+      ],
+      "visible_by_default": true,
+      "technician_only": false,
+      "icon": "clean",
+      "safety_notes": [
+        "Nic se nespustí bez potvrzení.",
+        "Osobní soubory se nemažou.",
+        "Stažené soubory se pouze zkontrolují, nemažou se."
+      ],
+      "never_does": [
+        "Nemaže dokumenty, fotky ani plochu.",
+        "Neodinstaluje programy automaticky.",
+        "Neprovádí registry či expert změny."
+      ],
+      "checklist": [
+        "Zkontroluje základní stav PC.",
+        "Odhadne bezpečný úklid dočasných souborů.",
+        "Připraví servisní report."
+      ]
+    },
+    {
+      "id": "speed_up",
+      "title_cs": "Zrychlit počítač",
+      "title_en": "Standard Optimization",
+      "short_description_cs": "Zkontroluje spouštěné aplikace, bloatware a základní nastavení výkonu.",
+      "long_description_cs": "Režim pro pomalý notebook nebo stolní počítač. Ukáže, co se spouští po startu, najde zbytečné aplikace a doporučí bezpečné změny.",
+      "risk": "moderate",
+      "recommended_for": ["Pomalý start", "Zasekaný notebook"],
+      "action_ids": [
+        "scan.system",
+        "cleanup.user_temp",
+        "startup.review",
+        "debloat.detect",
+        "debloat.manual_selection",
+        "winget.outdated.check",
+        "install_packs.offer",
+        "privacy.safe_toggles",
+        "power.recommend_profile",
+        "report.generate"
+      ],
+      "visible_by_default": true,
+      "technician_only": false,
+      "icon": "speed",
+      "safety_notes": [
+        "Změny se zobrazí v náhledu.",
+        "Odinstalace aplikací vyžaduje ruční výběr.",
+        "Rizikové kroky nejsou vybrané automaticky."
+      ],
+      "never_does": [
+        "Neslibuje naměřené zrychlení bez měření.",
+        "Nevypíná bezpečnostní funkce Windows.",
+        "Nemaže osobní data."
+      ],
+      "checklist": [
+        "Zkontroluje aplikace po startu.",
+        "Najde běžný bloatware.",
+        "Doporučí bezpečné kroky výkonu."
+      ]
+    },
+    {
+      "id": "gaming",
+      "title_cs": "Herní režim",
+      "title_en": "Gaming Mode",
+      "short_description_cs": "Zkontroluje nastavení pro hraní, výkon, napájení a zbytečné aplikace po startu.",
+      "long_description_cs": "Režim pro herní PC nebo notebook. Kontroluje herní nastavení a zbytečné procesy bez falešných FPS triků.",
+      "risk": "moderate",
+      "recommended_for": ["Herní PC", "Herní notebook"],
+      "action_ids": [
+        "scan.system",
+        "cleanup.user_temp",
+        "gaming.game_mode.check",
+        "gaming.xbox_game_bar.check",
+        "power.current_plan",
+        "power.recommend_profile",
+        "gpu.driver_info.check",
+        "storage.game_drives.check",
+        "startup.gaming_impact.review",
+        "report.generate"
+      ],
+      "visible_by_default": true,
+      "technician_only": false,
+      "icon": "gaming",
+      "safety_notes": [
+        "Žádné falešné FPS registry hacky.",
+        "Bez vypínání Defenderu.",
+        "Doporučení se zobrazí před změnami."
+      ],
+      "never_does": [
+        "Nevypíná zabezpečení.",
+        "Neinstaluje ovladače přes neznámé updatery.",
+        "Neslibuje FPS navíc."
+      ],
+      "checklist": [
+        "Zkontroluje herní nastavení Windows.",
+        "Ukáže aktuální napájení.",
+        "Najde aplikace po startu, které mohou překážet."
+      ]
+    },
+    {
+      "id": "school_work",
+      "title_cs": "Škola / práce",
+      "title_en": "Office / School Mode",
+      "short_description_cs": "Připraví notebook pro běžné používání, školu, práci, dokumenty a videohovory.",
+      "long_description_cs": "Vhodné pro studenty a běžné pracovní notebooky. Zaměřuje se na bezpečný úklid, běžné aplikace a přehledné nastavení.",
+      "risk": "moderate",
+      "recommended_for": ["Student", "Pracovní notebook"],
+      "action_ids": [
+        "scan.system",
+        "cleanup.user_temp",
+        "debloat.detect",
+        "startup.review",
+        "install_packs.offer",
+        "folders.school_work_backup.offer",
+        "report.generate"
+      ],
+      "visible_by_default": true,
+      "technician_only": false,
+      "icon": "work",
+      "safety_notes": [
+        "Osobní soubory se nemažou.",
+        "Aplikace se neinstalují automaticky.",
+        "Bloatware se jen navrhne k ručnímu výběru."
+      ],
+      "never_does": [
+        "Nemaže složky Dokumenty ani Stažené.",
+        "Neodstraňuje pracovní účty.",
+        "Nemění školní nebo firemní politiku zařízení."
+      ],
+      "checklist": [
+        "Zkontroluje běžný stav notebooku.",
+        "Nabídne běžný balíček aplikací.",
+        "Pomůže připravit základní složky."
+      ]
+    },
+    {
+      "id": "repair_windows",
+      "title_cs": "Opravit Windows",
+      "title_en": "Deep Repair Mode",
+      "short_description_cs": "Spustí nástroje pro opravu systému, jako SFC, DISM a síťové opravy.",
+      "long_description_cs": "Servisní režim pro problémy se systémem Windows. Některé akce trvají dlouho, vyžadují správce a mohou vyžadovat restart.",
+      "risk": "risky",
+      "recommended_for": ["Technik", "Poškozený systém"],
+      "action_ids": [
+        "restore_point.create",
+        "repair.sfc_scan",
+        "repair.dism_checkhealth",
+        "repair.dism_scanhealth",
+        "repair.dism_restorehealth",
+        "repair.chkdsk_scan",
+        "repair.flush_dns",
+        "repair.winsock_reset",
+        "repair.ip_stack_reset",
+        "repair.windows_update.basic",
+        "event_log.summary",
+        "report.generate_detailed"
+      ],
+      "visible_by_default": true,
+      "technician_only": false,
+      "icon": "repair",
+      "safety_notes": [
+        "Doporučeno pro technika.",
+        "Akce vyžadující správce se nespustí bez oprávnění.",
+        "Restart může být potřeba."
+      ],
+      "never_does": [
+        "Nevypíná Windows Update trvale.",
+        "Nevypíná Microsoft Defender.",
+        "Neprovádí aktivaci nebo KMS zásahy."
+      ],
+      "checklist": [
+        "Ověří systémové soubory.",
+        "Zkontroluje obraz Windows.",
+        "Nabídne bezpečné síťové opravy."
+      ]
+    },
+    {
+      "id": "custom",
+      "title_cs": "Vlastní režim",
+      "title_en": "Custom Mode",
+      "short_description_cs": "Vyber si přesně, které akce chceš provést.",
+      "long_description_cs": "Pohodlný ruční stavitel plánu. Bezpečné akce jsou nahoře, pokročilé a rizikové části jsou sbalené.",
+      "risk": "moderate",
+      "recommended_for": ["Technik", "Ruční servis"],
+      "action_ids": [
+        "scan.system",
+        "cleanup.user_temp",
+        "cleanup.windows_temp",
+        "startup.review",
+        "debloat.detect",
+        "power.current_plan",
+        "repair.sfc_scan",
+        "report.generate"
+      ],
+      "visible_by_default": true,
+      "technician_only": false,
+      "icon": "custom",
+      "safety_notes": [
+        "Vybereš jen konkrétní akce.",
+        "Náhled plánu je povinný před spuštěním.",
+        "Rizikové akce nejsou vybrané automaticky."
+      ],
+      "never_does": [
+        "Nespouští vše najednou.",
+        "Neskrývá technické příkazy v logu.",
+        "Nemaže osobní soubory."
+      ],
+      "checklist": [
+        "Vybereš kategorie akcí.",
+        "Zobrazíš plán.",
+        "Spustíš jen vybrané položky."
+      ]
+    },
+    {
+      "id": "expert",
+      "title_cs": "Technik / Expert",
+      "title_en": "Technician / Expert",
+      "short_description_cs": "Pokročilé nastavení, registry, detailní opravy a servisní nástroje.",
+      "long_description_cs": "Režim pro technika. Obsahuje pokročilé nástroje a Expert Lab, vždy s varováním a potvrzením.",
+      "risk": "expert",
+      "recommended_for": ["Cingy.Tech technik"],
+      "action_ids": [
+        "expert.warning_gate",
+        "expert.registry.preview",
+        "expert.registry.apply_selected_only",
+        "repair.sfc_scan",
+        "repair.dism_restorehealth",
+        "report.generate_detailed"
+      ],
+      "visible_by_default": false,
+      "technician_only": true,
+      "icon": "expert",
+      "safety_notes": [
+        "Vyžaduje technický režim.",
+        "Vyžaduje potvrzení varování.",
+        "Expert akce nejsou vybrané automaticky."
+      ],
+      "never_does": [
+        "Nenabízí apply-all pro expert nastavení.",
+        "Neprovádí neznámé registry hacky.",
+        "Neskrývá změny před technikem."
+      ],
+      "checklist": [
+        "Odemkne pokročilé nástroje.",
+        "Zobrazí technické detaily.",
+        "Umožní ruční práci s bezpečnostními bránami."
+      ]
+    }
+  ]
+}

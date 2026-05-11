@@ -2,20 +2,31 @@
 
 **Windows Optimizer & Service Suite** for professional PC repair and optimization work.
 
-This MVP is a safe foundation for a technician-facing Windows toolkit. It is not a one-click booster and it does not apply hidden changes. Every system-changing operation is represented as an `Action` with preview, risk level, admin requirement, execution result, and logging.
+This MVP is a safe foundation for a customer-friendly Windows service tool. It is not a one-click booster and it does not apply hidden changes. Every system-changing operation is still represented as an `Action` with preview, risk level, admin requirement, execution result, and logging.
 
 ## Current MVP
 
-- PySide6 desktop shell with Dashboard, Scan, Cleanup, Debloat, Startup, Power, Repair, Privacy, Expert Lab, Custom Mode, Reports, and Settings pages.
-- Administrator detection with a visible warning and explicit “Restart as Administrator” button.
+- Beginner-first PySide6 UX with Czech Home, Quick Scan, Modes, Reports, and Settings navigation.
+- Large customer-facing mode cards: Bezpečné vyčištění, Zrychlit počítač, Herní režim, Škola / práce, Opravit Windows, Vlastní režim, Technik / Expert.
+- Mode detail screen with friendly explanation, "what this does", "what this never does", grouped actions, action summary, preview, and execute buttons.
+- Advanced technician pages are hidden by default behind the left-side `Technik` toggle.
+- Administrator detection with a visible warning and explicit "Restartovat jako správce" button.
 - Central action engine with dry-run preview, confirmation gate, admin gate, risky/expert gate, and JSONL session logs.
 - System scanner using `psutil` where available.
 - Transparent health score based on disk fullness, startup count, bloatware count, RAM pressure, repair warnings, and temp/cache size.
 - Safe cleanup preview and a limited current-user temp cleanup executor.
 - Restore point wrapper through PowerShell.
 - Repair action wrappers for SFC, DISM, CHKDSK, DNS flush, Winsock reset, and IP stack reset.
-- Rule-backed presets, bloatware rules, startup rules, cleanup rules, power profiles, privacy toggles, install packs, and expert registry tweak metadata.
+- Rule-backed presets, modes, bloatware rules, startup rules, cleanup rules, power profiles, privacy toggles, install packs, and expert registry tweak metadata.
 - HTML service report generation with customer/job fields, checklist, before/after snapshots, actions, warnings, recommendations, and raw logs.
+
+## Default User Flow
+
+```text
+Domů → Spustit rychlou kontrolu → Vybrat režim → Náhled plánu → Spustit vybrané → Reporty
+```
+
+Technical pages such as Cleanup internals, Debloat, Startup, Repair, Privacy, Expert Lab, Custom Mode, and Logs remain available for the technician, but they are not part of the default customer flow.
 
 ## Requirements
 

@@ -14,6 +14,8 @@ app/
 
 UI callbacks should not hardcode dangerous system commands. Pages should ask modules for actions, preview through `ActionEngine.preview_plan()`, and execute through `ActionEngine.execute_plan()`.
 
+The default UX is organized around `app/core/modes.py` and `app/rules/modes.json`. Home and Modes use this customer-facing layer to build safe action plans from existing `Action` objects. Advanced pages remain available behind technician mode, but they should not become the default customer workflow.
+
 ## Action Lifecycle
 
 1. Build an `Action`.
@@ -43,6 +45,8 @@ Current tests cover:
 - transparent health scoring
 - directory size estimation
 - JSON rule validation
+- mode catalog and mode action planning
+- settings defaults for Czech and hidden advanced tools
 
 Run:
 

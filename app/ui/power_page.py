@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from PySide6.QtWidgets import QPushButton, QTextEdit, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QMessageBox, QPushButton, QTextEdit, QVBoxLayout, QWidget
 
 from app.admin import is_running_as_admin
 from app.constants import RULES_DIR
@@ -45,9 +45,16 @@ class PowerPage(QWidget):
         self.output.setPlainText("\n".join(preview.summary for preview in previews) or "No actions selected.")
 
     def execute(self) -> None:
+        actions = self.checklist.selected_actions()
+        if not actions:
+            self.output.setPlainText("Zatím nebyly vybrané žádné akce.")
+            return
+        confirmed = QMessageBox.question(self, "Potvrdit změnu napájení", f"Spustit {len(actions)} vybraných akcí?")
+        if confirmed != QMessageBox.Yes:
+            return
         engine = ActionEngine(ActionContext(is_admin=is_running_as_admin(), dry_run=False))
         try:
-            results = engine.execute_plan(self.checklist.selected_actions(), confirmed=True)
+            results = engine.execute_plan(actions, confirmed=True)
         except Exception as exc:
             self.output.setPlainText(str(exc))
             return

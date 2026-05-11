@@ -10,7 +10,9 @@ from app.constants import DEFAULT_TECHNICIAN, PROJECT_ROOT
 @dataclass(slots=True)
 class AppConfig:
     technician_name: str = DEFAULT_TECHNICIAN
+    language: str = "cs"
     enable_expert_lab: bool = False
+    show_advanced_tools: bool = False
     portable_mode: bool = True
     last_customer_name: str = ""
 
