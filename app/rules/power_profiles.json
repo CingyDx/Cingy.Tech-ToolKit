@@ -1,0 +1,25 @@
+{
+  "profiles": [
+    {
+      "id": "balanced",
+      "name": "Balanced",
+      "risk": "safe",
+      "powercfg_alias": "SCHEME_BALANCED",
+      "warning": ""
+    },
+    {
+      "id": "high_performance",
+      "name": "High Performance",
+      "risk": "moderate",
+      "powercfg_alias": "SCHEME_MIN",
+      "warning": "May increase battery usage, fan noise, and heat on laptops."
+    },
+    {
+      "id": "ultimate_performance",
+      "name": "Ultimate Performance",
+      "risk": "moderate",
+      "powercfg_alias": "e9a42b02-d5df-448d-aa00-03f14749eb61",
+      "warning": "Offer only when appropriate for plugged-in desktops or technician-approved gaming systems."
+    }
+  ]
+}

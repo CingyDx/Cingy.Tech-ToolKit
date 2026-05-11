@@ -1,0 +1,32 @@
+{
+  "tweaks": [
+    {
+      "id": "privacy.advertising_id",
+      "title": "Advertising ID",
+      "risk": "safe",
+      "description": "Offer to turn off app advertising ID for the current user.",
+      "requires_admin": false
+    },
+    {
+      "id": "privacy.suggested_content",
+      "title": "Suggested content",
+      "risk": "safe",
+      "description": "Offer to reduce suggested content in Windows settings where supported.",
+      "requires_admin": false
+    },
+    {
+      "id": "privacy.app_launch_tracking",
+      "title": "App launch tracking",
+      "risk": "safe",
+      "description": "Offer to disable app launch tracking for Start recommendations.",
+      "requires_admin": false
+    },
+    {
+      "id": "privacy.feedback_frequency",
+      "title": "Feedback frequency",
+      "risk": "moderate",
+      "description": "Offer a user-visible feedback frequency setting where supported.",
+      "requires_admin": false
+    }
+  ]
+}

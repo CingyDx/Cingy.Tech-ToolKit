@@ -1,0 +1,68 @@
+{
+  "actions": [
+    {
+      "id": "repair.sfc_scan",
+      "title": "SFC scan",
+      "risk": "safe",
+      "command": "sfc /scannow",
+      "requires_admin": true,
+      "restart_required": false
+    },
+    {
+      "id": "repair.dism_checkhealth",
+      "title": "DISM CheckHealth",
+      "risk": "safe",
+      "command": "DISM /Online /Cleanup-Image /CheckHealth",
+      "requires_admin": true,
+      "restart_required": false
+    },
+    {
+      "id": "repair.dism_scanhealth",
+      "title": "DISM ScanHealth",
+      "risk": "safe",
+      "command": "DISM /Online /Cleanup-Image /ScanHealth",
+      "requires_admin": true,
+      "restart_required": false
+    },
+    {
+      "id": "repair.dism_restorehealth",
+      "title": "DISM RestoreHealth",
+      "risk": "moderate",
+      "command": "DISM /Online /Cleanup-Image /RestoreHealth",
+      "requires_admin": true,
+      "restart_required": false
+    },
+    {
+      "id": "repair.chkdsk_scan",
+      "title": "CHKDSK read-only scan",
+      "risk": "safe",
+      "command": "chkdsk C: /scan",
+      "requires_admin": true,
+      "restart_required": false
+    },
+    {
+      "id": "repair.flush_dns",
+      "title": "Flush DNS",
+      "risk": "safe",
+      "command": "ipconfig /flushdns",
+      "requires_admin": false,
+      "restart_required": false
+    },
+    {
+      "id": "repair.winsock_reset",
+      "title": "Winsock reset",
+      "risk": "moderate",
+      "command": "netsh winsock reset",
+      "requires_admin": true,
+      "restart_required": true
+    },
+    {
+      "id": "repair.ip_stack_reset",
+      "title": "IP stack reset",
+      "risk": "moderate",
+      "command": "netsh int ip reset",
+      "requires_admin": true,
+      "restart_required": true
+    }
+  ]
+}

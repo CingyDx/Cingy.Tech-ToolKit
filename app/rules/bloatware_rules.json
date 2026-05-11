@@ -1,0 +1,52 @@
+{
+  "rules": [
+    {
+      "id": "oem_trial_antivirus",
+      "display_name": "OEM trial antivirus",
+      "match_patterns": ["mcafee", "norton security", "avast trial", "avg trial"],
+      "type": "desktop",
+      "risk": "moderate",
+      "recommended_for_presets": ["standard_optimization", "office_school_mode"],
+      "reason": "Trial security suites often expire, add startup load, and confuse customers. Confirm replacement/security status first.",
+      "uninstall_method": "registry_uninstall_string",
+      "can_remove": true,
+      "notes": "Never disable Microsoft Defender as part of this action."
+    },
+    {
+      "id": "oem_support_assistant",
+      "display_name": "OEM support assistant",
+      "match_patterns": ["hp support assistant", "lenovo vantage", "dell supportassist", "acer care center"],
+      "type": "oem",
+      "risk": "moderate",
+      "recommended_for_presets": ["standard_optimization"],
+      "reason": "OEM support apps may be useful for warranty/driver lookup but can add background services.",
+      "uninstall_method": "manual_selection",
+      "can_remove": true,
+      "notes": "Technician should decide per customer device."
+    },
+    {
+      "id": "consumer_games_appx",
+      "display_name": "Microsoft consumer games",
+      "match_patterns": ["king.com", "candycrush", "solitairecollection"],
+      "type": "appx",
+      "risk": "safe",
+      "recommended_for_presets": ["standard_optimization", "office_school_mode"],
+      "reason": "Consumer games are commonly unwanted on work or school PCs.",
+      "uninstall_method": "remove_appx_package_selected",
+      "can_remove": true,
+      "notes": "Remove only selected packages; never remove Store framework dependencies."
+    },
+    {
+      "id": "onedrive",
+      "display_name": "Microsoft OneDrive",
+      "match_patterns": ["onedrive"],
+      "type": "desktop",
+      "risk": "risky",
+      "recommended_for_presets": [],
+      "reason": "OneDrive may contain active customer sync and backup data.",
+      "uninstall_method": "manual_explicit_only",
+      "can_remove": false,
+      "notes": "Do not remove without explicit customer approval and data verification."
+    }
+  ]
+}

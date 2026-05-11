@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cingy.Tech ToolKit Service Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #102033;
+      --muted: #5b6b7e;
+      --line: #dbe4ef;
+      --accent: #0891b2;
+      --soft: #eef8fb;
+      --warn: #92400e;
+    }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: #f7fafc;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px;
+      background: white;
+      min-height: 100vh;
+    }
+    header {
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 18px;
+      margin-bottom: 24px;
+    }
+    h1, h2, h3 { margin: 0 0 12px; }
+    h1 { font-size: 30px; }
+    h2 { color: var(--accent); margin-top: 28px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 20px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--soft); }
+    .muted { color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+    }
+    .warning { color: var(--warn); font-weight: 700; }
+    summary { cursor: pointer; color: var(--accent); font-weight: 700; }
+    pre {
+      white-space: pre-wrap;
+      background: #0f172a;
+      color: #e5e7eb;
+      padding: 14px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Cingy.Tech ToolKit</h1>
+    <p class="muted">Windows Optimizer &amp; Service Suite | Report generated {{ generated_at }}</p>
+  </header>
+
+  <section>
+    <h2>Customer Summary</h2>
+    <div class="grid">
+      <div class="box">
+        <strong>Jméno zákazníka:</strong> {{ customer.customer_name or "Neuvedeno" }}<br>
+        <strong>Zařízení:</strong> {{ customer.device or "Neuvedeno" }}<br>
+        <strong>Zakázka:</strong> {{ customer.job or "Neuvedeno" }}<br>
+        <strong>Cena:</strong> {{ customer.price or "Neuvedeno" }}
+      </div>
+      <div class="box">
+        <strong>Problém:</strong><br>{{ customer.problem or "Neuvedeno" }}<br><br>
+        <strong>Restart required:</strong> {{ "Yes" if restart_required else "No" }}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Device Snapshot</h2>
+    <table>
+      <tbody>
+        {% for key, value in system_info.items() %}
+        <tr><th>{{ key }}</th><td>{{ value }}</td></tr>
+        {% else %}
+        <tr><td colspan="2">No scan snapshot attached.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Before / After</h2>
+    <div class="grid">
+      <div class="box">
+        <h3>Před</h3>
+        {% for key, value in snapshot.before.items() %}
+        <div><strong>{{ key }}:</strong> {{ value }}</div>
+        {% else %}
+        <p class="muted">No before snapshot recorded.</p>
+        {% endfor %}
+      </div>
+      <div class="box">
+        <h3>Po</h3>
+        {% for key, value in snapshot.after.items() %}
+        <div><strong>{{ key }}:</strong> {{ value }}</div>
+        {% else %}
+        <p class="muted">No after snapshot recorded.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Service Checklist</h2>
+    <table>
+      <tbody>
+        {% for item in checklist %}
+        <tr><td>{{ "☑" if item.checked else "☐" }}</td><td>{{ item.label }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Actions</h2>
+    <h3>Performed</h3>
+    <table>
+      <tbody>
+        {% for action in actions_performed %}
+        <tr><td>{{ action.action_id or action.id }}</td><td>{{ action.result or action.message }}</td></tr>
+        {% else %}
+        <tr><td colspan="2">No performed actions recorded.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h3>Skipped</h3>
+    <table>
+      <tbody>
+        {% for action in skipped_actions %}
+        <tr><td>{{ action.action_id or action.id }}</td><td>{{ action.result or action.message }}</td></tr>
+        {% else %}
+        <tr><td colspan="2">No skipped actions recorded.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Warnings & Recommendations</h2>
+    {% for warning in warnings %}
+    <p class="warning">{{ warning }}</p>
+    {% else %}
+    <p class="muted">No warnings recorded.</p>
+    {% endfor %}
+    <ul>
+      {% for recommendation in recommendations %}
+      <li>{{ recommendation }}</li>
+      {% else %}
+      <li>No recommendations recorded.</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Technician Details</h2>
+    <p>{{ technician_notes or customer.notes or "No technician notes." }}</p>
+    <details>
+      <summary>Raw logs</summary>
+      <pre>{{ raw_logs or "No raw logs attached." }}</pre>
+    </details>
+  </section>
+</main>
+</body>
+</html>

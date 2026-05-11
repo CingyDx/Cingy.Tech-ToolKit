@@ -1,0 +1,36 @@
+{
+  "tweaks": [
+    {
+      "id": "expert.explorer.show_hidden_files",
+      "title": "Show hidden files in Explorer",
+      "risk": "safe",
+      "registry": {
+        "hive": "HKCU",
+        "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "value_name": "Hidden",
+        "value_type": "REG_DWORD",
+        "target_value": 1,
+        "rollback_value": 2
+      },
+      "description": "Show hidden files for technician inspection.",
+      "requires_restart": false,
+      "source_comment": "Common Explorer per-user setting. Preview and backup are required before applying."
+    },
+    {
+      "id": "expert.explorer.show_file_extensions",
+      "title": "Show file extensions",
+      "risk": "safe",
+      "registry": {
+        "hive": "HKCU",
+        "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "value_name": "HideFileExt",
+        "value_type": "REG_DWORD",
+        "target_value": 0,
+        "rollback_value": 1
+      },
+      "description": "Show known file extensions to reduce customer confusion and technician mistakes.",
+      "requires_restart": false,
+      "source_comment": "Common Explorer per-user setting. Preview and backup are required before applying."
+    }
+  ]
+}
