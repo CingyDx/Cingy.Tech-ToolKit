@@ -200,7 +200,13 @@ class ActionSummaryPanel(SectionCard):
 
 
 class ActionChecklist(QWidget):
-    def __init__(self, actions: Iterable[Action], *, unchecked_admin_when_not_admin: bool = False) -> None:
+    def __init__(
+        self,
+        actions: Iterable[Action],
+        *,
+        unchecked_admin_when_not_admin: bool = False,
+        default_selected_ids: set[str] | None = None,
+    ) -> None:
         super().__init__()
         self.actions = list(actions)
         self._checks: dict[str, QCheckBox] = {}
@@ -210,20 +216,35 @@ class ActionChecklist(QWidget):
         for action in self.actions:
             row = QFrame()
             row.setObjectName("ActionRow")
+            row.setMinimumHeight(82)
             row_layout = QHBoxLayout(row)
-            row_layout.setContentsMargins(16, 14, 16, 14)
+            row_layout.setContentsMargins(16, 12, 16, 12)
             row_layout.setSpacing(14)
             check = QCheckBox()
-            checked = action.default_selected and not action.is_risky_or_expert
+            if default_selected_ids is None:
+                checked = action.default_selected and not action.is_risky_or_expert
+            else:
+                checked = action.id in default_selected_ids
             if unchecked_admin_when_not_admin and action.requires_admin:
                 checked = False
             check.setChecked(checked)
             self._checks[action.id] = check
-            text = QLabel(f"{friendly_action_title(action.id)}\n{_friendly_description(action)}")
-            text.setObjectName("ActionText")
-            text.setWordWrap(True)
+            check.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+
+            text_box = QWidget()
+            text_layout = QVBoxLayout(text_box)
+            text_layout.setContentsMargins(0, 0, 0, 0)
+            text_layout.setSpacing(4)
+            title = QLabel(friendly_action_title(action.id))
+            title.setObjectName("ActionTitle")
+            title.setWordWrap(True)
+            description = QLabel(_friendly_description(action))
+            description.setObjectName("ActionDescription")
+            description.setWordWrap(True)
+            text_layout.addWidget(title)
+            text_layout.addWidget(description)
             row_layout.addWidget(check)
-            row_layout.addWidget(text, 1)
+            row_layout.addWidget(text_box, 1)
             if action.requires_admin:
                 row_layout.addWidget(StatusPill("Správce", "warn"))
             row_layout.addWidget(risk_badge(action.risk_level))

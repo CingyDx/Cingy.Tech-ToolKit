@@ -15,6 +15,9 @@
         "cleanup.downloads_report",
         "report.generate"
       ],
+      "default_action_ids": [
+        "cleanup.user_temp"
+      ],
       "visible_by_default": true,
       "technician_only": false,
       "icon": "clean",
@@ -54,6 +57,7 @@
         "power.recommend_profile",
         "report.generate"
       ],
+      "default_action_ids": [],
       "visible_by_default": true,
       "technician_only": false,
       "icon": "speed",
@@ -93,6 +97,9 @@
         "startup.gaming_impact.review",
         "report.generate"
       ],
+      "default_action_ids": [
+        "power.current_plan"
+      ],
       "visible_by_default": true,
       "technician_only": false,
       "icon": "gaming",
@@ -129,6 +136,7 @@
         "folders.school_work_backup.offer",
         "report.generate"
       ],
+      "default_action_ids": [],
       "visible_by_default": true,
       "technician_only": false,
       "icon": "work",
@@ -170,6 +178,7 @@
         "event_log.summary",
         "report.generate_detailed"
       ],
+      "default_action_ids": [],
       "visible_by_default": true,
       "technician_only": false,
       "icon": "repair",
@@ -207,6 +216,7 @@
         "repair.sfc_scan",
         "report.generate"
       ],
+      "default_action_ids": [],
       "visible_by_default": true,
       "technician_only": false,
       "icon": "custom",
@@ -242,6 +252,7 @@
         "repair.dism_restorehealth",
         "report.generate_detailed"
       ],
+      "default_action_ids": [],
       "visible_by_default": false,
       "technician_only": true,
       "icon": "expert",

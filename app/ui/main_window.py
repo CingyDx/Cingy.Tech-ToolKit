@@ -316,6 +316,19 @@ QLabel#ModeDescription, QLabel#ActionText {
     color: #d9e3ef;
     line-height: 145%;
 }
+QFrame#ActionRow QLabel {
+    background: transparent;
+}
+QLabel#ActionTitle {
+    color: #ffffff;
+    font-size: 12.5pt;
+    font-weight: 850;
+}
+QLabel#ActionDescription {
+    color: #aab8c8;
+    font-size: 10.5pt;
+    line-height: 145%;
+}
 QLabel#ModeIcon {
     min-width: 38px;
     max-width: 38px;
@@ -379,6 +392,20 @@ QCheckBox {
 QCheckBox::indicator {
     width: 22px;
     height: 22px;
+    border-radius: 5px;
+    border: 1px solid #5c6b7a;
+    background: #111820;
+}
+QCheckBox::indicator:hover {
+    border-color: #22d3ee;
+}
+QCheckBox::indicator:checked {
+    background: #0ea5c2;
+    border-color: #31d5ee;
+}
+QCheckBox::indicator:disabled {
+    background: #1a2027;
+    border-color: #3a4652;
 }
 QGroupBox#Accordion {
     background: #1b2026;

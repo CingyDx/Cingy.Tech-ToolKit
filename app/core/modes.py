@@ -96,6 +96,7 @@ class ModeDefinition:
     safety_notes: list[str]
     never_does: list[str]
     checklist: list[str]
+    default_action_ids: list[str] = field(default_factory=list)
 
 
 @dataclass(slots=True)
@@ -159,7 +160,14 @@ def build_mode_plan(mode: ModeDefinition, *, is_admin: bool) -> ModePlan:
         seen.add(action.id)
         actions.append(action)
 
-    default_selected = [action for action in actions if action.default_selected and not action.is_risky_or_expert]
+    default_action_ids = set(mode.default_action_ids)
+    default_selected = [
+        action
+        for action in actions
+        if action.id in default_action_ids
+        and not action.is_risky_or_expert
+        and not (action.requires_admin and not is_admin)
+    ]
     return ModePlan(
         mode_id=mode.id,
         actions=actions,

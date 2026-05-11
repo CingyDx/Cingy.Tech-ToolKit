@@ -30,6 +30,15 @@ def test_safe_cleanup_plan_uses_existing_safe_actions():
     assert all(not action.is_risky_or_expert for action in plan.default_selected_actions)
 
 
+def test_gaming_mode_does_not_auto_select_cleanup():
+    catalog = ModeCatalog.load_default()
+
+    plan = build_mode_plan(catalog.get("gaming"), is_admin=False)
+
+    assert any(action.id == "cleanup.user_temp" for action in plan.actions)
+    assert "cleanup.user_temp" not in {action.id for action in plan.default_selected_actions}
+
+
 def test_repair_mode_summary_counts_admin_and_risky_actions():
     catalog = ModeCatalog.load_default()
 

@@ -4,7 +4,6 @@ from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import (
     QLabel,
     QMessageBox,
-    QPushButton,
     QStackedWidget,
     QTextEdit,
     QVBoxLayout,
@@ -54,6 +53,22 @@ class ModesPage(QWidget):
         layout.setContentsMargins(30, 28, 30, 30)
         layout.setSpacing(20)
         layout.addWidget(page_header("Režimy", "Vyber, co chceš s počítačem udělat. Detaily a potvrzení jsou až v dalším kroku."))
+
+        differences = SectionCard("Jak se režimy liší")
+        for line in [
+            "Bezpečné vyčištění: uklidí jen bezpečné dočasné soubory, bez osobních dat.",
+            "Zrychlit počítač: zkontroluje startup, bloatware a nastavení výkonu; odebrání je ruční.",
+            "Herní režim: kontroluje herní nastavení, napájení a aplikace na pozadí; bez FPS hacků.",
+            "Škola / práce: doporučí běžné aplikace a pořádek pro dokumenty a videohovory.",
+            "Opravit Windows: servisní nástroje jako SFC, DISM a síťové opravy, spíš pro technika.",
+            "Vlastní a Expert: ruční výběr, registry a detailní servis až po potvrzení.",
+        ]:
+            label = QLabel(line)
+            label.setObjectName("MutedText")
+            label.setWordWrap(True)
+            differences.layout.addWidget(label)
+        layout.addWidget(differences)
+
         grid = QWidget()
         from PySide6.QtWidgets import QGridLayout
 
@@ -67,6 +82,7 @@ class ModesPage(QWidget):
             grid_layout.addWidget(card, index // 2, index % 2)
         layout.addWidget(grid)
         layout.addStretch(1)
+
         wrapper = QWidget()
         wrapper_layout = QVBoxLayout(wrapper)
         wrapper_layout.setContentsMargins(0, 0, 0, 0)
@@ -106,9 +122,10 @@ class ModeDetailPage(QWidget):
         layout.setSpacing(20)
         layout.addWidget(page_header(self.mode.title_cs, self.mode.long_description_cs))
 
-        top_row = QWidget()
-        top_layout = QVBoxLayout(top_row)
-        top_layout.setContentsMargins(0, 0, 0, 0)
+        back_top = secondary_button("← Zpět na výběr režimu")
+        back_top.clicked.connect(self.back_requested.emit)
+        layout.addWidget(button_row(back_top))
+
         summary = ActionSummaryPanel()
         summary.set_counts(
             total=self.plan.total_actions,
@@ -116,8 +133,7 @@ class ModeDetailPage(QWidget):
             risky=self.plan.risky_count,
             advanced=self.plan.advanced_count,
         )
-        top_layout.addWidget(summary)
-        layout.addWidget(top_row)
+        layout.addWidget(summary)
 
         checklist = SectionCard("Co tento režim udělá")
         for item in self.mode.checklist:
@@ -129,11 +145,16 @@ class ModeDetailPage(QWidget):
             never.layout.addWidget(QLabel(f"• {item}"))
         layout.addWidget(never)
 
+        default_selected_ids = {action.id for action in self.plan.default_selected_actions}
         for title, actions in self._group_actions(self.plan.actions):
             if not actions:
                 continue
             section = SectionCard(title)
-            action_list = ActionChecklist(actions, unchecked_admin_when_not_admin=not is_running_as_admin())
+            action_list = ActionChecklist(
+                actions,
+                unchecked_admin_when_not_admin=not is_running_as_admin(),
+                default_selected_ids=default_selected_ids,
+            )
             self.group_checklists.append(action_list)
             section.layout.addWidget(action_list)
             layout.addWidget(section)
@@ -208,6 +229,7 @@ class ModeDetailPage(QWidget):
     def _on_finished(self, results: list) -> None:
         lines = ["Dokončeno:", ""]
         lines.extend(f"- {result.message}" for result in results)
+        lines.extend(["", "Na výběr jiného režimu se vrátíš tlačítkem „Zpět na režimy“."])
         self.output.setPlainText("\n".join(lines))
 
     def _on_failed(self, message: str) -> None:

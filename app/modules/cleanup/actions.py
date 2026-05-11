@@ -29,7 +29,7 @@ def _safe_temp_path(path: Path) -> bool:
 
 def _delete_temp_contents(path: Path) -> tuple[int, list[str]]:
     if not _safe_temp_path(path):
-        return 0, [f"Refused to clean unsafe path: {path}"]
+        return 0, [f"Odmítnuto čištění mimo bezpečnou temp složku: {path}"]
 
     deleted_bytes = 0
     warnings: list[str] = []
@@ -37,7 +37,7 @@ def _delete_temp_contents(path: Path) -> tuple[int, list[str]]:
         try:
             is_junction = getattr(child, "is_junction", lambda: False)
             if child.is_symlink() or is_junction():
-                warnings.append(f"Skipped reparse point or symlink: {child.name}")
+                warnings.append(f"Přeskočen odkaz nebo junction: {child.name}")
                 continue
             if child.is_dir():
                 deleted_bytes += estimate_directory_size(child)
@@ -46,7 +46,7 @@ def _delete_temp_contents(path: Path) -> tuple[int, list[str]]:
                 deleted_bytes += child.stat().st_size
                 child.unlink(missing_ok=True)
         except OSError as exc:
-            warnings.append(f"Skipped locked item {child.name}: {exc}")
+            warnings.append(f"Přeskočena zamčená položka {child.name}: {exc}")
     return deleted_bytes, warnings
 
 
@@ -55,7 +55,7 @@ def _temp_action(action_id: str, title: str, path: Path, requires_admin: bool, r
         size = estimate_directory_size(path)
         return ActionPreview(
             action_id=action_id,
-            summary=f"{title}: estimated {_format_bytes(size)} eligible for cleanup.",
+            summary=f"{title}: odhad {_format_bytes(size)} bezpečných položek k vyčištění.",
             details=[str(path)],
             estimated_bytes=size,
         )
@@ -64,8 +64,8 @@ def _temp_action(action_id: str, title: str, path: Path, requires_admin: bool, r
         deleted, warnings = _delete_temp_contents(path)
         return ActionResult(
             action_id=action_id,
-            success=not warnings,
-            message=f"Cleaned approximately {_format_bytes(deleted)} from {path}.",
+            success=True,
+            message=f"Vyčištěno přibližně {_format_bytes(deleted)} ze složky {path}. Zamčené položky se bezpečně přeskočily.",
             stderr="\n".join(warnings),
         )
 
@@ -73,7 +73,7 @@ def _temp_action(action_id: str, title: str, path: Path, requires_admin: bool, r
         id=action_id,
         title=title,
         category="Cleanup",
-        description=f"Clean files from {path}. Locked files are skipped.",
+        description=f"Vyčistí dočasné soubory ze složky {path}. Zamčené položky se přeskočí.",
         risk_level=risk,
         requires_admin=requires_admin,
         preview_handler=preview,
@@ -93,9 +93,9 @@ def _placeholder_cleanup_action(action_id: str, title: str, description: str, ri
         requires_admin=False,
         preview_handler=lambda _context: ActionPreview(
             action_id=action_id,
-            summary=f"{title}: preview-only MVP action.",
+            summary=f"{title}: zatím jen bezpečný náhled v MVP.",
             details=[description],
-            warnings=["Execution will be implemented with a dedicated safe backend in a later pass."],
+            warnings=["Spuštění bude doplněné bezpečným backendem v dalším průchodu."],
         ),
         selected_by_default=False,
     )
@@ -105,7 +105,7 @@ def get_cleanup_actions() -> list[Action]:
     actions = [
         _temp_action(
             "cleanup.user_temp",
-            "Clean user temp files",
+            "Vyčištění uživatelských dočasných souborů",
             Path(tempfile.gettempdir()),
             requires_admin=False,
             risk="safe",
@@ -116,7 +116,7 @@ def get_cleanup_actions() -> list[Action]:
         actions.append(
             _temp_action(
                 "cleanup.windows_temp",
-                "Clean Windows temp files",
+                "Vyčištění systémových dočasných souborů",
                 Path(windir) / "Temp",
                 requires_admin=True,
                 risk="moderate",
@@ -126,37 +126,37 @@ def get_cleanup_actions() -> list[Action]:
         [
             _placeholder_cleanup_action(
                 "cleanup.recycle_bin",
-                "Empty recycle bin",
-                "Requires final customer confirmation before emptying the recycle bin.",
+                "Vysypání koše po potvrzení",
+                "Před vysypáním koše bude potřeba finální potvrzení zákazníka.",
                 "moderate",
             ),
             _placeholder_cleanup_action(
                 "cleanup.thumbnail_cache",
-                "Clean thumbnail cache",
-                "Will use a safe Explorer thumbnail cache reset flow in a later pass.",
+                "Vyčištění náhledů obrázků",
+                "V dalším průchodu použije bezpečný postup pro reset náhledů Průzkumníka.",
                 "moderate",
             ),
             _placeholder_cleanup_action(
                 "cleanup.directx_shader_cache",
-                "Clean DirectX shader cache",
-                "Will use known DirectX cache locations only after preview.",
+                "Vyčištění DirectX cache",
+                "Použije jen známé cache DirectX po předchozím náhledu.",
                 "moderate",
             ),
             _placeholder_cleanup_action(
                 "cleanup.delivery_optimization",
-                "Clean Delivery Optimization cache",
-                "Will use supported Windows cleanup mechanisms rather than deleting active update folders.",
+                "Vyčištění cache aktualizací",
+                "Použije podporované mechanismy Windows místo mazání aktivních složek aktualizací.",
                 "moderate",
             ),
             _placeholder_cleanup_action(
                 "cleanup.downloads_report",
-                "Report large Downloads files",
-                "Reports large files in Downloads without deleting anything.",
+                "Přehled velkých souborů ve Stažených",
+                "Pouze zobrazí velké soubory ve Stažených. Nic nemaže.",
                 "safe",
             ),
         ]
     )
     if not is_windows():
         for action in actions:
-            action.description += " Non-Windows development environment detected."
+            action.description += " Detekováno vývojové prostředí mimo Windows."
     return actions

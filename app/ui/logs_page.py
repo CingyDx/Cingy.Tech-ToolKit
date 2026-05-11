@@ -40,6 +40,7 @@ class LogsPage(QWidget):
                 content = path.read_text(encoding="utf-8", errors="replace")
             except OSError as exc:
                 content = f"Nelze přečíst log: {exc}"
-            lines.append(content[-4000:])
+            recent_lines = content.splitlines()[-40:]
+            lines.append("\n".join(recent_lines))
             lines.append("")
         self.output.setPlainText("\n".join(lines))
