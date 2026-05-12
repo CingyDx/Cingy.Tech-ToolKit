@@ -15,8 +15,10 @@ from PySide6.QtWidgets import (
 )
 
 from app.constants import REPORTS_DIR, SERVICE_CHECKLIST_ITEMS
-from app.core.action_model import CustomerJobProfile, ServiceChecklistItem
+from app.core.action_model import CustomerJobProfile, ServiceChecklistItem, SnapshotPair
+from app.core.recommendations import recommendations_from_snapshot
 from app.core.report_generator import ReportGenerator
+from app.core.scanner import SystemScanner, summarize_system_snapshot
 from app.ui.components import ReportList, SectionCard, button_row, make_scroll_area, page_header, primary_button, secondary_button
 
 
@@ -100,8 +102,20 @@ class ReportsPage(QWidget):
             notes=self.notes.toPlainText(),
         )
         checklist = [ServiceChecklistItem(label=check.text(), checked=check.isChecked()) for check in self.checks]
+        system_snapshot = SystemScanner().scan()
+        snapshot = SnapshotPair(
+            before={
+                "Disk C": f"{system_snapshot.get('system_drive_used_percent', '?')} % plný",
+                "Startup": f"{system_snapshot.get('startup_item_count', 0)} položek",
+                "Bloatware": f"{system_snapshot.get('detected_bloatware_count', 0)} nalezených položek",
+                "Health score": system_snapshot.get("health_score", "?"),
+            }
+        )
         self.last_report_path = ReportGenerator().generate(
             customer=customer,
+            snapshot=snapshot,
+            system_info=summarize_system_snapshot(system_snapshot),
+            recommendations=recommendations_from_snapshot(system_snapshot),
             checklist=checklist,
             technician_notes=self.notes.toPlainText(),
         )

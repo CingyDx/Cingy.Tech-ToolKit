@@ -5,21 +5,45 @@
       "title": "Advertising ID",
       "risk": "safe",
       "description": "Offer to turn off app advertising ID for the current user.",
-      "requires_admin": false
+      "requires_admin": false,
+      "registry": {
+        "hive": "HKCU",
+        "path": "Software\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo",
+        "value_name": "Enabled",
+        "value_type": "REG_DWORD",
+        "target_value": 0,
+        "rollback_value": 1
+      }
     },
     {
       "id": "privacy.suggested_content",
       "title": "Suggested content",
       "risk": "safe",
       "description": "Offer to reduce suggested content in Windows settings where supported.",
-      "requires_admin": false
+      "requires_admin": false,
+      "registry": {
+        "hive": "HKCU",
+        "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "value_name": "SubscribedContent-338389Enabled",
+        "value_type": "REG_DWORD",
+        "target_value": 0,
+        "rollback_value": 1
+      }
     },
     {
       "id": "privacy.app_launch_tracking",
       "title": "App launch tracking",
       "risk": "safe",
       "description": "Offer to disable app launch tracking for Start recommendations.",
-      "requires_admin": false
+      "requires_admin": false,
+      "registry": {
+        "hive": "HKCU",
+        "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "value_name": "Start_TrackProgs",
+        "value_type": "REG_DWORD",
+        "target_value": 0,
+        "rollback_value": 1
+      }
     },
     {
       "id": "privacy.feedback_frequency",

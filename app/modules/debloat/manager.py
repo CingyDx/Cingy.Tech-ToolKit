@@ -5,6 +5,7 @@ from typing import Any
 
 from app.constants import RULES_DIR
 from app.core.action_model import Action, ActionPreview
+from app.core.powershell_runner import PowerShellRunner
 from app.core.state_store import JsonRuleStore
 
 try:
@@ -33,13 +34,31 @@ class BloatwareManager:
         return self.store.load_required("bloatware_rules.json").get("rules", [])
 
     def detect(self) -> list[DetectedBloatware]:
-        installed = self._installed_desktop_apps()
+        return self.match_inventory(
+            self.rules(),
+            desktop_apps=self._installed_desktop_apps(),
+            appx_packages=self._installed_appx_packages(),
+        )
+
+    def match_inventory(
+        self,
+        rules: list[dict[str, Any]],
+        *,
+        desktop_apps: list[dict[str, str]],
+        appx_packages: list[dict[str, str]],
+    ) -> list[DetectedBloatware]:
         detected: list[DetectedBloatware] = []
-        for rule in self.rules():
+        seen: set[tuple[str, str]] = set()
+        for rule in rules:
+            inventory = appx_packages if rule.get("type") == "appx" else desktop_apps
             patterns = [pattern.lower() for pattern in rule.get("match_patterns", [])]
-            for app in installed:
+            for app in inventory:
                 haystack = f"{app.get('name', '')} {app.get('publisher', '')}".lower()
                 if any(pattern in haystack for pattern in patterns):
+                    key = (str(rule.get("id", "")), app.get("name", ""))
+                    if key in seen:
+                        continue
+                    seen.add(key)
                     detected.append(
                         DetectedBloatware(
                             name=app.get("name", rule["display_name"]),
@@ -100,3 +119,31 @@ class BloatwareManager:
             except OSError:
                 continue
         return apps
+
+    def _installed_appx_packages(self) -> list[dict[str, str]]:
+        runner = PowerShellRunner()
+        result = runner.run("Get-AppxPackage", timeout=120)
+        if not result.ok:
+            return []
+        packages: list[dict[str, str]] = []
+        current: dict[str, str] = {}
+        for line in result.stdout.splitlines():
+            if not line.strip():
+                if current.get("name"):
+                    packages.append(current)
+                current = {}
+                continue
+            if ":" not in line:
+                continue
+            key, value = line.split(":", 1)
+            key = key.strip().lower()
+            value = value.strip()
+            if key == "name":
+                current["name"] = value
+            elif key == "publisher":
+                current["publisher"] = value
+            elif key == "packagefullname":
+                current["package_full_name"] = value
+        if current.get("name"):
+            packages.append(current)
+        return packages

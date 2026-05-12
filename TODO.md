@@ -11,13 +11,14 @@
 ## Implementation
 
 - [ ] Confirm all winget package IDs in `app/rules/install_packs.json` before enabling install execution.
-- [ ] Add real AppX package scan to Debloat page.
-- [ ] Add safe Recycle Bin empty executor with final confirmation.
-- [ ] Add Windows Update status read-only check.
-- [ ] Add Windows activation read-only check.
-- [ ] Add disk type and health detection.
-- [ ] Add startup disable/enable with backup.
-- [ ] Add registry tweak write/undo implementation for safe Expert Lab entries.
+- [x] Add real AppX package scan to Debloat page.
+- [x] Add safe Recycle Bin empty executor with final confirmation.
+- [x] Add Windows Update status read-only check.
+- [x] Add Windows activation read-only check.
+- [x] Add disk type detection.
+- [ ] Add disk SMART health detection.
+- [x] Add startup disable/enable with backup.
+- [x] Add registry tweak write/undo implementation for safe Expert Lab entries.
 - [ ] Add streaming command output for SFC/DISM.
 - [ ] Add before/after snapshot capture around executed plans.
-- [ ] Add report recommendations from scanner facts.
+- [x] Add report recommendations from scanner facts.

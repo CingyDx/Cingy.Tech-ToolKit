@@ -13,12 +13,17 @@ This MVP is a safe foundation for a customer-friendly Windows service tool. It i
 - Administrator detection with a visible warning and explicit "Restartovat jako správce" button.
 - Central action engine with dry-run preview, confirmation gate, admin gate, risky/expert gate, and JSONL session logs.
 - System scanner using `psutil` where available.
+- Read-only Windows activation, Windows Update, GPU, and disk type checks with graceful fallback when unavailable.
 - Transparent health score based on disk fullness, startup count, bloatware count, RAM pressure, repair warnings, and temp/cache size.
-- Safe cleanup preview and a limited current-user temp cleanup executor.
+- Safe cleanup preview and executors for user temp, Windows temp, Recycle Bin, thumbnail cache, DirectX shader cache, and Delivery Optimization cache with conservative path guards.
+- Debloat detection reads desktop uninstall registry entries and AppX package inventory, but removal remains manual and explicit.
+- Startup manager can disable/restore supported current-user `HKCU Run` entries with backup.
+- Privacy and Expert Lab safe HKCU registry actions can preview, back up, apply, and provide rollback metadata.
 - Restore point wrapper through PowerShell.
 - Repair action wrappers for SFC, DISM, CHKDSK, DNS flush, Winsock reset, and IP stack reset.
 - Rule-backed presets, modes, bloatware rules, startup rules, cleanup rules, power profiles, privacy toggles, install packs, and expert registry tweak metadata.
 - HTML service report generation with customer/job fields, checklist, before/after snapshots, actions, warnings, recommendations, and raw logs.
+- Report generation attaches a fresh scan summary and honest technician recommendations.
 
 ## Default User Flow
 

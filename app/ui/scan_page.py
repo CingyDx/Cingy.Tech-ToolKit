@@ -5,7 +5,7 @@ import json
 from PySide6.QtWidgets import QLabel, QTextEdit, QVBoxLayout, QWidget
 
 from app.core.scanner import SystemScanner
-from app.ui.components import EmptyState, SectionCard, StatusPill, make_scroll_area, page_header, primary_button, secondary_button
+from app.ui.components import SectionCard, StatusPill, make_scroll_area, page_header, primary_button, secondary_button
 
 
 class ScanPage(QWidget):
@@ -55,9 +55,14 @@ class ScanPage(QWidget):
             if item.widget():
                 item.widget().deleteLater()
         score = snapshot.get("health_score", "?")
+        temp_gb = int(snapshot.get("temp_cache_estimated_bytes", 0)) / (1024**3)
         self.summary.layout.addWidget(StatusPill(f"Skóre stavu: {score}/100", "good"))
         self.summary.layout.addWidget(QLabel(f"Zařízení: {snapshot.get('device_name', 'Neznámé')}"))
         self.summary.layout.addWidget(QLabel(f"Windows: {snapshot.get('windows_version', 'Neznámé')}"))
         self.summary.layout.addWidget(QLabel(f"RAM: {snapshot.get('ram_total_gb', '?')} GB, využití {snapshot.get('ram_used_percent', '?')}%"))
+        self.summary.layout.addWidget(QLabel(f"GPU: {snapshot.get('gpu', 'Neznámé')}"))
+        self.summary.layout.addWidget(QLabel(f"Typ disku: {snapshot.get('boot_drive_type', 'unknown')}"))
+        self.summary.layout.addWidget(QLabel(f"Aktivace Windows: {snapshot.get('windows_activation_status', 'Neznámé')}"))
+        self.summary.layout.addWidget(QLabel(f"Windows Update: {snapshot.get('windows_update_status', 'Neznámé')}"))
         self.summary.layout.addWidget(QLabel(f"Aplikace po startu: {snapshot.get('startup_item_count', 0)}"))
-        self.summary.layout.addWidget(QLabel(f"Odhad dočasných souborů: {int(snapshot.get('temp_cache_estimated_bytes', 0)) / (1024**3):.1f} GB"))
+        self.summary.layout.addWidget(QLabel(f"Odhad dočasných souborů: {temp_gb:.1f} GB"))
